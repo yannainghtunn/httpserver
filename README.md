@@ -101,7 +101,7 @@ Let's understand those by reading below HTTP Header section.
 ### `Host` Header
 Let's understand `Host` header.
 
-How browser know where is `www.google.com` is.
+How browser know where is `www.google.com`.
 Browser will first get ip of `www.google.com` from dns server.
 Then it will send data - "GET request or something" to that ip. If `http` is used then data is send to `ip:80`.
 If `https` is used then `ip:443`.
@@ -158,7 +158,7 @@ It can be set by `javascript` code or response header `set-cookie`.
 ## Let's Create a simple http server in `nc` command.
 First create a file `hello.txt`  
 with below text:
-```
+```html
 HTTP/1.1 200 OK
 Content-Type: text/html; charset=UTF-8
 Server: Yan's Server
@@ -177,9 +177,64 @@ After created, Run below command to start server.
   ~$ while true; do cat hello.txt | nc -l 4444 -w 1; done
 ```
 
-Well. You have successfully create a simple http server.  
+Well. You have successfully created a simple http server.  
 Open browser and enter `http://localhost:4444` to see your page.
 
+## Run Dart-Server From This Repo
+It is just a very basic implementation of http server in dart lang.
+```bash 
+   ~$ git clone https://github.com/yannainghtunn/httpserver.git
+   ~$ cd httpserver
+   ~$ dart run main.dart
+```
+
+## Benchmarks
+Let's Benchmarks dart server (I have created) and php server.
+
+First install following.
+```bash
+  ~$ sudo apt install apache2-utils
+```
+
+Now start dart server.
+```bash
+  ~$ cd httpserver
+  ~$ dart run main.dart
+  Server Listening: http://127.0.0.1:4444/
+```
+Run following command to benchmarks.
+```bash
+  ~$ ab -n 10000 -c 1000 http://localhost:4444/
+```
+
+So, you have done for dart part.  
+#### Now benchmarks with php.
+Run following command.
+```bash
+  ~$ cd httpserver
+  ~$ php -S localhost:8080
+  ~$ ab -n 10000 -c 1000 http://localhost:8080/
+```
+
+You have also done for php part.
+
+***
+
+Now compare this two result. You will see that php is more faster than dart server.  
+This is because dart is async and php is mulithreaded.  
 
 
+So, what is benefit of using async like server?  
+These server can give benefits if there is a lot of network calls in server like database call, api calls, etc,.
+
+
+
+
+## Contributing
+
+Contributions are always welcome!
+
+## Feedback
+
+If you have any feedback, please reach out to me at yannainghtun112358@gmail.com
 

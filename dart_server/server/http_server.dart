@@ -19,9 +19,11 @@ class MyHttpServer {
   Future<void> run() async {
     final server = await ServerSocket.bind(InternetAddress.anyIPv4, port);
     print("Server Listening: http://127.0.0.1:$port/");
+    int count = 0;
     server.listen((client) {
       // This method invoke on new client connection.
       handleClient(client);
+      //print("${count++}");
     });
   }
 
